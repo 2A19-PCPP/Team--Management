@@ -1,0 +1,1943 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1180</width>
+    <height>700</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>1000</width>
+    <height>640</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Hackathon Management</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QMainWindow, #centralwidget { background-color: #030a1c; }
+QLabel { background: transparent; color: #e6f1ff; font-family: &quot;Segoe UI&quot;, &quot;Roboto&quot;, &quot;Noto Sans&quot;, sans-serif; font-size: 9pt; }
+QToolTip { background: #0a1d44; color: #e6f1ff; border: 1px solid #1e5bd6; }
+
+/* ---------- header ---------- */
+#headerFrame {
+  background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #061431, stop:0.45 #0a2a6e, stop:0.75 #1c2fa0, stop:1 #4b1fa8);
+  border: 1px solid #1d4ed8; border-radius: 8px;
+}
+#logoLabel { font-size: 24pt; }
+#appTitleLabel { font-size: 14pt; font-weight: 600; color: #ffffff; }
+#appSubtitleLabel { font-size: 9pt; color: #bcd3ff; }
+#bellButton { background: transparent; border: none; font-size: 15pt; color: #4db5ff; }
+#badgeLabel { background: #e11d48; color: white; border-radius: 7px; font-size: 7pt; font-weight: bold; }
+#userFrame { background: rgba(6, 20, 49, 160); border: 1px solid #2a5bd7; border-radius: 8px; }
+#avatarLabel { background: #0b1f4d; border: 1px solid #4db5ff; border-radius: 15px; font-size: 11pt; }
+
+/* ---------- panels ---------- */
+#sidebarFrame, #infoFrame, #mgmtFrame { background-color: #051030; border: 1px solid #123a7a; border-radius: 8px; }
+#infoLine, #mgmtLine { background-color: #123a7a; border: none; }
+
+/* ---------- sidebar ---------- */
+#sidebarFrame QPushButton {
+  background: transparent; color: #cfe3ff; border: none; border-radius: 6px;
+  text-align: left; padding: 8px 12px; font-size: 9pt;
+}
+#sidebarFrame QPushButton:hover { background: #0a1f4f; }
+#sidebarFrame QPushButton:checked { background: #0a4ec9; color: #ffffff; font-weight: 600; }
+
+/* ---------- section titles ---------- */
+#infoIcon, #mgIcon { font-size: 20pt; color: #22d3ee; }
+#infoTitle, #mgTitle { font-size: 12pt; font-weight: 600; color: #ffffff; }
+#infoSubtitle, #mgSubtitle { font-size: 8pt; color: #a9bfe6; }
+#teamIdLabel, #teamNameLabel, #membersLabel, #leaderLabel, #statusLabel { font-size: 9pt; font-weight: 600; color: #e6f1ff; }
+
+/* ---------- inputs ---------- */
+QLineEdit, QComboBox {
+  background-color: #071a3d; color: #dbe9ff; border: 1px solid #1e5bd6; border-radius: 6px;
+  padding: 8px 10px; font-size: 9pt; selection-background-color: #0b6cff;
+}
+QLineEdit:focus, QComboBox:focus { border: 1px solid #22d3ee; }
+QComboBox::drop-down { border: none; width: 28px; }
+QComboBox::down-arrow { image: url(:/images/arrow_down.png); width: 12px; height: 8px; }
+QComboBox QAbstractItemView {
+  background: #071a3d; color: #e6f1ff; border: 1px solid #1e5bd6;
+  selection-background-color: #0b6cff; selection-color: white; outline: none;
+}
+#organizerCombo { background: transparent; border: none; padding: 4px 6px; font-size: 10pt; color: #ffffff; min-width: 90px; }
+#organizerCombo QAbstractItemView { background: #071a3d; }
+
+/* ---------- buttons ---------- */
+#saveButton { background-color: #0b6cff; color: white; border: none; border-radius: 6px; font-weight: 600; font-size: 10pt; }
+#saveButton:hover { background-color: #2b82ff; }
+#searchButton { background-color: #0b6cff; color: white; border: none; border-radius: 6px; font-weight: 500; }
+#searchButton:hover { background-color: #2b82ff; }
+#addTeamButton { background-color: #0f9d93; color: white; border: 1px solid #22d3c4; border-radius: 6px; font-weight: 600; }
+#addTeamButton:hover { background-color: #14b8aa; }
+
+/* ---------- table ---------- */
+#teamsTable { background-color: #040d26; color: #dbe9ff; border: 1px solid #123a7a; gridline-color: #123a7a; outline: none; }
+#teamsTable::item:selected { background: #0a4ec9; color: white; }
+QHeaderView { background: #0a1d44; }
+QHeaderView::section { background-color: #0a1d44; color: #e6f1ff; border: none; border-right: 1px solid #123a7a; border-bottom: 1px solid #123a7a; padding: 8px 4px; font-weight: 600; }
+QTableCornerButton::section { background: #0a1d44; border: none; }
+QScrollBar:vertical { background: #040d26; width: 10px; margin: 0; }
+QScrollBar::handle:vertical { background: #1e5bd6; border-radius: 5px; min-height: 24px; }
+QScrollBar::add-line, QScrollBar::sub-line { height: 0; width: 0; }
+
+/* ---------- pager ---------- */
+#showingLabel { color: #a9bfe6; font-size: 8pt; }
+#firstPageButton, #prevPageButton, #nextPageButton, #lastPageButton, #page1Button {
+  background: #081a3f; color: #cfe3ff; border: 1px solid #1e5bd6; border-radius: 5px; font-size: 10pt;
+}
+#page1Button:checked { background: #0b6cff; color: white; border: 1px solid #0b6cff; font-weight: 600; }
+#firstPageButton:hover, #prevPageButton:hover, #nextPageButton:hover, #lastPageButton:hover { background: #0f2c66; }
+
+/* ---------- action cards ---------- */
+#cardView    { background-color: #0a3a8f; border: 1px solid #2b7bff; border-radius: 8px; }
+#cardEdit    { background-color: #0a4a52; border: 1px solid #14b8a6; border-radius: 8px; }
+#cardDelete  { background-color: #5c1038; border: 1px solid #e11d48; border-radius: 8px; }
+#cardPdf     { background-color: #35197a; border: 1px solid #8b5cf6; border-radius: 8px; }
+#cardStats, #cardHistory { background-color: #061a42; border: 1px solid #1fa7ff; border-radius: 8px; }
+
+#cardViewIcon, #cardEditIcon, #cardDeleteIcon, #cardPdfIcon, #cardStatsIcon, #cardHistoryIcon { font-size: 18pt; }
+#cardViewTitle, #cardEditTitle, #cardDeleteTitle, #cardPdfTitle, #cardStatsTitle, #cardHistoryTitle { font-size: 9pt; font-weight: 600; color: #ffffff; }
+#cardViewSub, #cardEditSub, #cardDeleteSub, #cardPdfSub, #cardStatsSub, #cardHistorySub { font-size: 7pt; color: #b5c9ee; }
+#cardViewChevron    { font-size: 16pt; color: #4db5ff; }
+#cardEditChevron    { font-size: 16pt; color: #2dd4bf; }
+#cardDeleteChevron  { font-size: 16pt; color: #fb7185; }
+#cardPdfChevron     { font-size: 16pt; color: #a78bfa; }
+#cardStatsChevron, #cardHistoryChevron { font-size: 16pt; color: #4db5ff; }
+</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="rootLayout" stretch="0,1">
+    <property name="spacing">
+     <number>10</number>
+    </property>
+    <property name="leftMargin">
+     <number>12</number>
+    </property>
+    <property name="topMargin">
+     <number>12</number>
+    </property>
+    <property name="rightMargin">
+     <number>12</number>
+    </property>
+    <property name="bottomMargin">
+     <number>12</number>
+    </property>
+    <item>
+     <widget class="QFrame" name="headerFrame">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>66</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>66</height>
+       </size>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::Shape::NoFrame</enum>
+      </property>
+      <layout class="QHBoxLayout" name="headerLayout">
+       <property name="spacing">
+        <number>12</number>
+       </property>
+       <property name="leftMargin">
+        <number>14</number>
+       </property>
+       <property name="topMargin">
+        <number>8</number>
+       </property>
+       <property name="rightMargin">
+        <number>14</number>
+       </property>
+       <property name="bottomMargin">
+        <number>8</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="logoLabel">
+         <property name="minimumSize">
+          <size>
+           <width>48</width>
+           <height>48</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>48</width>
+           <height>48</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>🛡️</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignmentFlag::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="titleLayout">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="appTitleLabel">
+           <property name="text">
+            <string>Hackathon Management</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="appSubtitleLabel">
+           <property name="text">
+            <string>Manage all hackathons in one place</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <spacer name="spacer1">
+         <property name="orientation">
+          <enum>Qt::Orientation::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <layout class="QGridLayout" name="bellLayout">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <item row="0" column="0">
+          <widget class="QToolButton" name="bellButton">
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
+           </property>
+           <property name="text">
+            <string>🔔</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0" alignment="Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTop">
+          <widget class="QLabel" name="badgeLabel">
+           <property name="minimumSize">
+            <size>
+             <width>15</width>
+             <height>15</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>15</width>
+             <height>15</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignmentFlag::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QFrame" name="userFrame">
+         <property name="frameShape">
+          <enum>QFrame::Shape::NoFrame</enum>
+         </property>
+         <layout class="QHBoxLayout" name="userLayout">
+          <property name="spacing">
+           <number>4</number>
+          </property>
+          <property name="leftMargin">
+           <number>4</number>
+          </property>
+          <property name="topMargin">
+           <number>2</number>
+          </property>
+          <property name="rightMargin">
+           <number>4</number>
+          </property>
+          <property name="bottomMargin">
+           <number>2</number>
+          </property>
+          <item>
+           <widget class="QLabel" name="avatarLabel">
+            <property name="minimumSize">
+             <size>
+              <width>30</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>30</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>👤</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="organizerCombo">
+            <item>
+             <property name="text">
+              <string>Organizer</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="bodyLayout" stretch="0,0,1">
+      <property name="spacing">
+       <number>10</number>
+      </property>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QFrame" name="sidebarFrame">
+        <property name="minimumSize">
+         <size>
+          <width>140</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>140</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::Shape::NoFrame</enum>
+        </property>
+        <layout class="QVBoxLayout" name="sidebarLayout">
+         <property name="spacing">
+          <number>6</number>
+         </property>
+         <property name="leftMargin">
+          <number>8</number>
+         </property>
+         <property name="topMargin">
+          <number>12</number>
+         </property>
+         <property name="rightMargin">
+          <number>8</number>
+         </property>
+         <property name="bottomMargin">
+          <number>12</number>
+         </property>
+         <item>
+          <widget class="QPushButton" name="navHackathons">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>38</height>
+            </size>
+           </property>
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::FocusPolicy::NoFocus</enum>
+           </property>
+           <property name="text">
+            <string>📅   Hackathons</string>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+           <property name="checked">
+            <bool>false</bool>
+           </property>
+           <property name="autoExclusive">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="navParticipants">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>38</height>
+            </size>
+           </property>
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::FocusPolicy::NoFocus</enum>
+           </property>
+           <property name="text">
+            <string>👤   Participants</string>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+           <property name="checked">
+            <bool>false</bool>
+           </property>
+           <property name="autoExclusive">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="navTeams">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>38</height>
+            </size>
+           </property>
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::FocusPolicy::NoFocus</enum>
+           </property>
+           <property name="text">
+            <string>👥   Teams</string>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+           <property name="autoExclusive">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="navOrganizers">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>38</height>
+            </size>
+           </property>
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::FocusPolicy::NoFocus</enum>
+           </property>
+           <property name="text">
+            <string>🛡️   Organizers</string>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+           <property name="checked">
+            <bool>false</bool>
+           </property>
+           <property name="autoExclusive">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="spacer2">
+           <property name="orientation">
+            <enum>Qt::Orientation::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QFrame" name="infoFrame">
+        <property name="minimumSize">
+         <size>
+          <width>230</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>250</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::Shape::NoFrame</enum>
+        </property>
+        <layout class="QVBoxLayout" name="infoLayout">
+         <property name="spacing">
+          <number>12</number>
+         </property>
+         <property name="leftMargin">
+          <number>14</number>
+         </property>
+         <property name="topMargin">
+          <number>12</number>
+         </property>
+         <property name="rightMargin">
+          <number>14</number>
+         </property>
+         <property name="bottomMargin">
+          <number>14</number>
+         </property>
+         <item>
+          <layout class="QHBoxLayout" name="infoHeaderLayout">
+           <property name="spacing">
+            <number>8</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QLabel" name="infoIcon">
+             <property name="text">
+              <string>👥</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <layout class="QVBoxLayout" name="infoTitleLayout">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="infoTitle">
+               <property name="text">
+                <string>Team Information</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="infoSubtitle">
+               <property name="text">
+                <string>Add or update team details</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <spacer name="spacer3">
+             <property name="orientation">
+              <enum>Qt::Orientation::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QFrame" name="infoLine">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>1</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>1</height>
+            </size>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::Shape::NoFrame</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="teamIdLayout">
+           <property name="spacing">
+            <number>6</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QLabel" name="teamIdLabel">
+             <property name="text">
+              <string>🏷️  Team ID</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="teamIdEdit">
+             <property name="placeholderText">
+              <string>Enter team ID</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="teamNameLayout">
+           <property name="spacing">
+            <number>6</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QLabel" name="teamNameLabel">
+             <property name="text">
+              <string>👥  Team Name</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="teamNameEdit">
+             <property name="placeholderText">
+              <string>Enter team name</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="membersLayout">
+           <property name="spacing">
+            <number>6</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QLabel" name="membersLabel">
+             <property name="text">
+              <string>👥  Number of Members</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="membersEdit">
+             <property name="placeholderText">
+              <string>Enter number of members</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="leaderLayout">
+           <property name="spacing">
+            <number>6</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QLabel" name="leaderLabel">
+             <property name="text">
+              <string>👤  Team Leader</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QComboBox" name="leaderCombo">
+             <item>
+              <property name="text">
+               <string>Select team leader</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="statusLayout">
+           <property name="spacing">
+            <number>6</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QLabel" name="statusLabel">
+             <property name="text">
+              <string>🔄  Status</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QComboBox" name="statusCombo">
+             <item>
+              <property name="text">
+               <string>Select status</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Active</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Inactive</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Pending</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <spacer name="spacer4">
+           <property name="orientation">
+            <enum>Qt::Orientation::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="saveButton">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>42</height>
+            </size>
+           </property>
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::FocusPolicy::NoFocus</enum>
+           </property>
+           <property name="text">
+            <string>💾   Save Team</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="rightLayout" stretch="1,0,0">
+        <property name="spacing">
+         <number>10</number>
+        </property>
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QFrame" name="mgmtFrame">
+          <property name="frameShape">
+           <enum>QFrame::Shape::NoFrame</enum>
+          </property>
+          <layout class="QVBoxLayout" name="mgmtLayout">
+           <property name="spacing">
+            <number>12</number>
+           </property>
+           <property name="leftMargin">
+            <number>14</number>
+           </property>
+           <property name="topMargin">
+            <number>12</number>
+           </property>
+           <property name="rightMargin">
+            <number>14</number>
+           </property>
+           <property name="bottomMargin">
+            <number>12</number>
+           </property>
+           <item>
+            <layout class="QHBoxLayout" name="mgHeaderLayout">
+             <property name="spacing">
+              <number>8</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="mgIcon">
+               <property name="text">
+                <string>👥</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <layout class="QVBoxLayout" name="mgTitleLayout">
+               <property name="spacing">
+                <number>0</number>
+               </property>
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item>
+                <widget class="QLabel" name="mgTitle">
+                 <property name="text">
+                  <string>Team Management</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="mgSubtitle">
+                 <property name="text">
+                  <string>Manage and organize your teams efficiently</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <spacer name="spacer5">
+               <property name="orientation">
+                <enum>Qt::Orientation::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="QFrame" name="mgmtLine">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>1</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>1</height>
+              </size>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::Shape::NoFrame</enum>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="searchRowLayout">
+             <property name="spacing">
+              <number>10</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QLineEdit" name="searchEdit">
+               <property name="placeholderText">
+                <string>🔍   Search team by  name...</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="searchButton">
+               <property name="minimumSize">
+                <size>
+                 <width>100</width>
+                 <height>34</height>
+                </size>
+               </property>
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
+               </property>
+               <property name="focusPolicy">
+                <enum>Qt::FocusPolicy::NoFocus</enum>
+               </property>
+               <property name="text">
+                <string>🔍  Search</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="spacer6">
+               <property name="orientation">
+                <enum>Qt::Orientation::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QPushButton" name="addTeamButton">
+               <property name="minimumSize">
+                <size>
+                 <width>118</width>
+                 <height>34</height>
+                </size>
+               </property>
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
+               </property>
+               <property name="focusPolicy">
+                <enum>Qt::FocusPolicy::NoFocus</enum>
+               </property>
+               <property name="text">
+                <string>＋  Add Team</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="QTableWidget" name="teamsTable">
+             <property name="verticalScrollBarPolicy">
+              <enum>Qt::ScrollBarPolicy::ScrollBarAsNeeded</enum>
+             </property>
+             <property name="horizontalScrollBarPolicy">
+              <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOff</enum>
+             </property>
+             <property name="editTriggers">
+              <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
+             </property>
+             <property name="alternatingRowColors">
+              <bool>false</bool>
+             </property>
+             <property name="selectionMode">
+              <enum>QAbstractItemView::SelectionMode::SingleSelection</enum>
+             </property>
+             <property name="selectionBehavior">
+              <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
+             </property>
+             <property name="showGrid">
+              <bool>true</bool>
+             </property>
+             <attribute name="horizontalHeaderDefaultSectionSize">
+              <number>100</number>
+             </attribute>
+             <attribute name="horizontalHeaderStretchLastSection">
+              <bool>true</bool>
+             </attribute>
+             <attribute name="verticalHeaderVisible">
+              <bool>false</bool>
+             </attribute>
+             <column>
+              <property name="text">
+               <string>ID</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>Team Name</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>Number of Members</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>Team Leader</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>Status</string>
+              </property>
+             </column>
+            </widget>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="pagerLayout">
+             <property name="spacing">
+              <number>6</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="showingLabel">
+               <property name="text">
+                <string>Showing 0 to 0 of 0 teams</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="spacer7">
+               <property name="orientation">
+                <enum>Qt::Orientation::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QPushButton" name="firstPageButton">
+               <property name="minimumSize">
+                <size>
+                 <width>30</width>
+                 <height>28</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>30</width>
+                 <height>28</height>
+                </size>
+               </property>
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
+               </property>
+               <property name="focusPolicy">
+                <enum>Qt::FocusPolicy::NoFocus</enum>
+               </property>
+               <property name="text">
+                <string>«</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="prevPageButton">
+               <property name="minimumSize">
+                <size>
+                 <width>30</width>
+                 <height>28</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>30</width>
+                 <height>28</height>
+                </size>
+               </property>
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
+               </property>
+               <property name="focusPolicy">
+                <enum>Qt::FocusPolicy::NoFocus</enum>
+               </property>
+               <property name="text">
+                <string>‹</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="page1Button">
+               <property name="minimumSize">
+                <size>
+                 <width>30</width>
+                 <height>28</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>30</width>
+                 <height>28</height>
+                </size>
+               </property>
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
+               </property>
+               <property name="focusPolicy">
+                <enum>Qt::FocusPolicy::NoFocus</enum>
+               </property>
+               <property name="text">
+                <string>1</string>
+               </property>
+               <property name="checkable">
+                <bool>true</bool>
+               </property>
+               <property name="checked">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="nextPageButton">
+               <property name="minimumSize">
+                <size>
+                 <width>30</width>
+                 <height>28</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>30</width>
+                 <height>28</height>
+                </size>
+               </property>
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
+               </property>
+               <property name="focusPolicy">
+                <enum>Qt::FocusPolicy::NoFocus</enum>
+               </property>
+               <property name="text">
+                <string>›</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="lastPageButton">
+               <property name="minimumSize">
+                <size>
+                 <width>30</width>
+                 <height>28</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>30</width>
+                 <height>28</height>
+                </size>
+               </property>
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
+               </property>
+               <property name="focusPolicy">
+                <enum>Qt::FocusPolicy::NoFocus</enum>
+               </property>
+               <property name="text">
+                <string>»</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="cardsRow1Layout">
+          <property name="spacing">
+           <number>10</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QFrame" name="cardView">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>56</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>56</height>
+             </size>
+            </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Shape::NoFrame</enum>
+            </property>
+            <layout class="QHBoxLayout" name="cardViewLayout">
+             <property name="spacing">
+              <number>10</number>
+             </property>
+             <property name="leftMargin">
+              <number>14</number>
+             </property>
+             <property name="topMargin">
+              <number>8</number>
+             </property>
+             <property name="rightMargin">
+              <number>12</number>
+             </property>
+             <property name="bottomMargin">
+              <number>8</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="cardViewIcon">
+               <property name="text">
+                <string>👁️</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <layout class="QVBoxLayout" name="cardViewTextLayout">
+               <property name="spacing">
+                <number>0</number>
+               </property>
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item>
+                <widget class="QLabel" name="cardViewTitle">
+                 <property name="text">
+                  <string>View Team</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="cardViewSub">
+                 <property name="text">
+                  <string>See team details</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <spacer name="spacer8">
+               <property name="orientation">
+                <enum>Qt::Orientation::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QLabel" name="cardViewChevron">
+               <property name="text">
+                <string>›</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QFrame" name="cardEdit">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>56</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>56</height>
+             </size>
+            </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Shape::NoFrame</enum>
+            </property>
+            <layout class="QHBoxLayout" name="cardEditLayout">
+             <property name="spacing">
+              <number>10</number>
+             </property>
+             <property name="leftMargin">
+              <number>14</number>
+             </property>
+             <property name="topMargin">
+              <number>8</number>
+             </property>
+             <property name="rightMargin">
+              <number>12</number>
+             </property>
+             <property name="bottomMargin">
+              <number>8</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="cardEditIcon">
+               <property name="text">
+                <string>✏️</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <layout class="QVBoxLayout" name="cardEditTextLayout">
+               <property name="spacing">
+                <number>0</number>
+               </property>
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item>
+                <widget class="QLabel" name="cardEditTitle">
+                 <property name="text">
+                  <string>Edit Team</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="cardEditSub">
+                 <property name="text">
+                  <string>Update team info</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <spacer name="spacer9">
+               <property name="orientation">
+                <enum>Qt::Orientation::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QLabel" name="cardEditChevron">
+               <property name="text">
+                <string>›</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QFrame" name="cardDelete">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>56</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>56</height>
+             </size>
+            </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Shape::NoFrame</enum>
+            </property>
+            <layout class="QHBoxLayout" name="cardDeleteLayout">
+             <property name="spacing">
+              <number>10</number>
+             </property>
+             <property name="leftMargin">
+              <number>14</number>
+             </property>
+             <property name="topMargin">
+              <number>8</number>
+             </property>
+             <property name="rightMargin">
+              <number>12</number>
+             </property>
+             <property name="bottomMargin">
+              <number>8</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="cardDeleteIcon">
+               <property name="text">
+                <string>🗑️</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <layout class="QVBoxLayout" name="cardDeleteTextLayout">
+               <property name="spacing">
+                <number>0</number>
+               </property>
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item>
+                <widget class="QLabel" name="cardDeleteTitle">
+                 <property name="text">
+                  <string>Delete Team</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="cardDeleteSub">
+                 <property name="text">
+                  <string>Remove team</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <spacer name="spacer10">
+               <property name="orientation">
+                <enum>Qt::Orientation::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QLabel" name="cardDeleteChevron">
+               <property name="text">
+                <string>›</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QFrame" name="cardPdf">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>56</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>56</height>
+             </size>
+            </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Shape::NoFrame</enum>
+            </property>
+            <layout class="QHBoxLayout" name="cardPdfLayout">
+             <property name="spacing">
+              <number>10</number>
+             </property>
+             <property name="leftMargin">
+              <number>14</number>
+             </property>
+             <property name="topMargin">
+              <number>8</number>
+             </property>
+             <property name="rightMargin">
+              <number>12</number>
+             </property>
+             <property name="bottomMargin">
+              <number>8</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="cardPdfIcon">
+               <property name="text">
+                <string>📄</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <layout class="QVBoxLayout" name="cardPdfTextLayout">
+               <property name="spacing">
+                <number>0</number>
+               </property>
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item>
+                <widget class="QLabel" name="cardPdfTitle">
+                 <property name="text">
+                  <string>Export PDF</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="cardPdfSub">
+                 <property name="text">
+                  <string>Download report</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <spacer name="spacer11">
+               <property name="orientation">
+                <enum>Qt::Orientation::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QLabel" name="cardPdfChevron">
+               <property name="text">
+                <string>›</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="cardsRow2Layout">
+          <property name="spacing">
+           <number>10</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QFrame" name="cardStats">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>56</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>56</height>
+             </size>
+            </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Shape::NoFrame</enum>
+            </property>
+            <layout class="QHBoxLayout" name="cardStatsLayout">
+             <property name="spacing">
+              <number>10</number>
+             </property>
+             <property name="leftMargin">
+              <number>14</number>
+             </property>
+             <property name="topMargin">
+              <number>8</number>
+             </property>
+             <property name="rightMargin">
+              <number>12</number>
+             </property>
+             <property name="bottomMargin">
+              <number>8</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="cardStatsIcon">
+               <property name="text">
+                <string>📊</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <layout class="QVBoxLayout" name="cardStatsTextLayout">
+               <property name="spacing">
+                <number>0</number>
+               </property>
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item>
+                <widget class="QLabel" name="cardStatsTitle">
+                 <property name="text">
+                  <string>Team Statistics</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="cardStatsSub">
+                 <property name="text">
+                  <string>View team analytics and performance</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <spacer name="spacer12">
+               <property name="orientation">
+                <enum>Qt::Orientation::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QLabel" name="cardStatsChevron">
+               <property name="text">
+                <string>›</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QFrame" name="cardHistory">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>56</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>56</height>
+             </size>
+            </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Shape::NoFrame</enum>
+            </property>
+            <layout class="QHBoxLayout" name="cardHistoryLayout">
+             <property name="spacing">
+              <number>10</number>
+             </property>
+             <property name="leftMargin">
+              <number>14</number>
+             </property>
+             <property name="topMargin">
+              <number>8</number>
+             </property>
+             <property name="rightMargin">
+              <number>12</number>
+             </property>
+             <property name="bottomMargin">
+              <number>8</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="cardHistoryIcon">
+               <property name="text">
+                <string>🕘</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <layout class="QVBoxLayout" name="cardHistoryTextLayout">
+               <property name="spacing">
+                <number>0</number>
+               </property>
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item>
+                <widget class="QLabel" name="cardHistoryTitle">
+                 <property name="text">
+                  <string>Team History</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="cardHistorySub">
+                 <property name="text">
+                  <string>Track team evolution</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <spacer name="spacer13">
+               <property name="orientation">
+                <enum>Qt::Orientation::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QLabel" name="cardHistoryChevron">
+               <property name="text">
+                <string>›</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
